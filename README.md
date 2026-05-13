@@ -202,9 +202,16 @@ Six documented failure modes in `failure_analysis/FAILURES.md`:
 
 ## Showcase
 
-Live training dashboard + HADS visualizer + benchmark explorer deployed to Vercel.
+**Live**: https://showcase-two-snowy.vercel.app
 
-`[Phase 7 — in progress]`
+| Page | Description |
+|------|-------------|
+| [Home](https://showcase-two-snowy.vercel.app) | Hero, key results, HADS explanation, baseline comparison table |
+| [HADS Visualizer](https://showcase-two-snowy.vercel.app/hads) | Per-head block mask grid, entropy/sparsity sliders, head classification |
+| [Benchmarks](https://showcase-two-snowy.vercel.app/benchmarks) | Latency / memory / throughput / KL charts with raw data tables |
+| [Training Replay](https://showcase-two-snowy.vercel.app/training) | Animated 10k-step loss curve, HADS recalibration event timeline |
+
+Built with Next.js 16 (App Router, fully static), Recharts, Tailwind CSS.
 
 ---
 
