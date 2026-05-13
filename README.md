@@ -202,14 +202,14 @@ Six documented failure modes in `failure_analysis/FAILURES.md`:
 
 ## Showcase
 
-**Live**: https://showcase-two-snowy.vercel.app
+**Live**: https://xsake-hridam.vercel.app
 
 | Page | Description |
 |------|-------------|
-| [Home](https://showcase-two-snowy.vercel.app) | Hero, key results, HADS explanation, baseline comparison table |
-| [HADS Visualizer](https://showcase-two-snowy.vercel.app/hads) | Per-head block mask grid, entropy/sparsity sliders, head classification |
-| [Benchmarks](https://showcase-two-snowy.vercel.app/benchmarks) | Latency / memory / throughput / KL charts with raw data tables |
-| [Training Replay](https://showcase-two-snowy.vercel.app/training) | Animated 10k-step loss curve, HADS recalibration event timeline |
+| [Home](https://xsake-hridam.vercel.app) | Hero, key results, HADS explanation, baseline comparison table |
+| [HADS Visualizer](https://xsake-hridam.vercel.app/hads) | Per-head block mask grid, entropy/sparsity sliders, head classification |
+| [Benchmarks](https://xsake-hridam.vercel.app/benchmarks) | Latency / memory / throughput / KL charts with raw data tables |
+| [Training Replay](https://xsake-hridam.vercel.app/training) | Animated 10k-step loss curve, HADS recalibration event timeline |
 
 Built with Next.js 16 (App Router, fully static), Recharts, Tailwind CSS.
 
