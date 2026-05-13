@@ -1,0 +1,8 @@
+seq_lens:    [512, 1024, 2048, 4096]
+batch_sizes: [1, 2, 4, 8]
+n_heads:     12
+d_head:      64
+block_size:  128
+n_warmup:    5
+n_trials:    20
+device_counts: [1, 2, 4, 8]

@@ -1,0 +1,46 @@
+name: Kernel Correctness
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  correctness:
+    name: Numerical correctness tests (CPU)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-correctness-${{ hashFiles('requirements.txt') }}
+
+      - name: Install CPU dependencies
+        run: |
+          pip install --upgrade pip
+          pip install "jax[cpu]>=0.4.25" jaxlib flax optax numpy pytest pyyaml
+
+      - name: Run kernel correctness tests
+        run: |
+          pytest tests/test_kernel_correctness.py \
+                 tests/test_hads_pattern.py \
+                 tests/test_sharding.py \
+                 -v --tb=short
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: correctness-results
+          path: .pytest_results/

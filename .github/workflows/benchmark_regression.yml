@@ -1,0 +1,75 @@
+name: Benchmark Regression
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "kernels/**"
+      - "model/**"
+      - "benchmarks/**"
+      - "ci/**"
+
+jobs:
+  regression:
+    name: Benchmark regression check (CPU)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-bench-${{ hashFiles('requirements.txt') }}
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install "jax[cpu]>=0.4.25" jaxlib flax optax numpy pyyaml matplotlib
+
+      - name: Run HADS sparsity benchmark
+        run: |
+          python -m benchmarks.hads_benchmark \
+            --seq_len 512 \
+            --out_json benchmarks/results/hads_results.json \
+            --out_plot benchmarks/results/memory_savings.png
+        env:
+          JAX_PLATFORM_NAME: cpu
+
+      - name: Check for regressions
+        run: |
+          python -m ci.regression_reporter \
+            --current benchmarks/results/hads_results.json \
+            --metric hads \
+            --out benchmarks/results/regression_report.md
+
+      - name: Upload regression report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-report
+          path: |
+            benchmarks/results/regression_report.md
+            benchmarks/results/hads_results.json
+            benchmarks/results/memory_savings.png
+
+      - name: Comment on PR if regression
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('benchmarks/results/regression_report.md', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report.slice(0, 65000),
+            });

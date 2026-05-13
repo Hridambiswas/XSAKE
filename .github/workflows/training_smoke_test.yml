@@ -1,0 +1,40 @@
+name: Training Smoke Test
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 4 * * 1"
+
+jobs:
+  smoke:
+    name: Short training run — loss must decrease
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-smoke-${{ hashFiles('requirements.txt') }}
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install "jax[cpu]>=0.4.25" jaxlib flax optax orbax-checkpoint \
+                      numpy pyyaml pytest
+
+      - name: Run smoke test (20 steps, CPU)
+        run: |
+          pytest tests/test_loss_convergence.py -v --tb=short
+        env:
+          XSAKE_SMOKE_STEPS: "20"
+          JAX_PLATFORM_NAME: cpu

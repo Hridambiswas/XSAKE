@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XSAKE — Training Dashboard</title>
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --border: #2a2a2a;
+      --accent: #e63946;
+      --text: #e8e8e8;
+      --muted: #888;
+      --green: #2ecc71;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'JetBrains Mono', monospace, sans-serif; }
+
+    header {
+      display: flex; align-items: center; gap: 16px;
+      padding: 18px 32px; border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    header h1 { font-size: 1.4rem; letter-spacing: 2px; color: var(--accent); }
+    header span { color: var(--muted); font-size: 0.8rem; }
+    .live-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--green); animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px; padding: 24px 32px;
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 16px;
+    }
+    .card h3 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;
+                color: var(--muted); margin-bottom: 12px; }
+
+    .stat-row { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 20px; }
+    .stat { background: var(--surface); border: 1px solid var(--border);
+             border-radius: 6px; padding: 14px 20px; min-width: 140px; }
+    .stat .label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+    .stat .value { font-size: 1.8rem; font-weight: 700; color: var(--accent); margin-top: 4px; }
+
+    .chart { height: 280px; }
+    .full-width { grid-column: 1 / -1; }
+
+    footer { text-align: center; color: var(--muted); font-size: 0.72rem;
+              padding: 20px; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="live-dot" id="liveDot"></div>
+  <h1>XSAKE</h1>
+  <span>XLA-Fused Sparse Attention Kernel Engine — Training Dashboard</span>
+</header>
+
+<div style="padding: 16px 32px 0;">
+  <div class="stat-row" id="statRow">
+    <div class="stat"><div class="label">Step</div><div class="value" id="statStep">—</div></div>
+    <div class="stat"><div class="label">Loss</div><div class="value" id="statLoss">—</div></div>
+    <div class="stat"><div class="label">Perplexity</div><div class="value" id="statPpl">—</div></div>
+    <div class="stat"><div class="label">Grad Norm</div><div class="value" id="statGrad">—</div></div>
+    <div class="stat"><div class="label">Tokens</div><div class="value" id="statTok">—</div></div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h3>Training Loss</h3>
+    <div id="lossChart" class="chart"></div>
+  </div>
+  <div class="card">
+    <h3>Perplexity</h3>
+    <div id="pplChart" class="chart"></div>
+  </div>
+  <div class="card">
+    <h3>Gradient Norm</h3>
+    <div id="gradChart" class="chart"></div>
+  </div>
+  <div class="card">
+    <h3>HADS Per-Head Sparsity</h3>
+    <div id="hadsChart" class="chart"></div>
+  </div>
+  <div class="card full-width">
+    <h3>Latency: XSAKE vs Dense Attention (ms)</h3>
+    <div id="latencyChart" class="chart"></div>
+  </div>
+  <div class="card full-width">
+    <h3>Memory Savings vs Dense (MB)</h3>
+    <div id="memChart" class="chart"></div>
+  </div>
+</div>
+
+<footer>XSAKE Dashboard — refreshes every 5s &nbsp;|&nbsp; Built by Hridam Biswas</footer>
+
+<script>
+const LAYOUT = (title, yaxis) => ({
+  paper_bgcolor: '#161616', plot_bgcolor: '#0d0d0d',
+  font: { color: '#e8e8e8', size: 11 },
+  margin: { t: 10, b: 40, l: 50, r: 10 },
+  xaxis: { gridcolor: '#2a2a2a', zeroline: false },
+  yaxis: { gridcolor: '#2a2a2a', zeroline: false, title: yaxis },
+  showlegend: true,
+  legend: { bgcolor: 'rgba(0,0,0,0)', font: { size: 10 } },
+});
+
+const LINE = (x, y, name, color) => ({
+  x, y, name, type: 'scatter', mode: 'lines',
+  line: { color, width: 2 },
+});
+
+function ema(vals, a = 0.9) {
+  const out = []; let s = vals[0];
+  for (const v of vals) { s = a * s + (1 - a) * v; out.push(s); }
+  return out;
+}
+
+async function fetchMetrics() {
+  try {
+    const r = await fetch('/metrics');
+    const d = await r.json();
+    if (!d.steps || d.steps.length === 0) return;
+
+    const step = d.steps.at(-1);
+    const loss  = d.losses.at(-1);
+    const ppl   = d.ppls.at(-1);
+    const gnorm = d.grad_norms.at(-1);
+    const tok   = d.tokens.at(-1);
+
+    document.getElementById('statStep').textContent = step.toLocaleString();
+    document.getElementById('statLoss').textContent = loss.toFixed(4);
+    document.getElementById('statPpl').textContent  = ppl.toFixed(2);
+    document.getElementById('statGrad').textContent = gnorm.toFixed(4);
+    document.getElementById('statTok').textContent  = (tok / 1e6).toFixed(1) + 'M';
+
+    Plotly.react('lossChart',
+      [LINE(d.steps, d.losses, 'raw', '#e6394644'),
+       LINE(d.steps, ema(d.losses), 'smoothed', '#e63946')],
+      LAYOUT('', 'loss'));
+
+    Plotly.react('pplChart',
+      [LINE(d.steps, d.ppls.map(Math.log), 'log perplexity', '#4C72B0')],
+      LAYOUT('', 'log PPL'));
+
+    Plotly.react('gradChart',
+      [LINE(d.steps, d.grad_norms, 'grad norm', '#f4a261')],
+      LAYOUT('', '‖∇‖'));
+
+    document.getElementById('liveDot').style.background = '#2ecc71';
+  } catch (e) {
+    document.getElementById('liveDot').style.background = '#e63946';
+  }
+}
+
+async function fetchBenchmarks() {
+  try {
+    const r = await fetch('/benchmark');
+    const d = await r.json();
+
+    // Latency chart
+    if (d.latency_results) {
+      const seqs = Object.keys(d.latency_results.seq_lens || {}).map(Number).sort((a,b)=>a-b);
+      const bs = '1';
+      const dense  = seqs.map(s => d.latency_results.seq_lens[s]?.[bs]?.dense_ms ?? null);
+      const xsake  = seqs.map(s => d.latency_results.seq_lens[s]?.[bs]?.xsake_ms ?? null);
+      Plotly.react('latencyChart',
+        [LINE(seqs, dense, 'Dense JAX', '#4C72B0'),
+         LINE(seqs, xsake, 'XSAKE (HADS)', '#e63946')],
+        LAYOUT('', 'ms'));
+    }
+
+    // Memory chart
+    if (d.memory_results) {
+      const seqs  = Object.keys(d.memory_results.seq_lens || {}).map(Number).sort((a,b)=>a-b);
+      const dense = seqs.map(s => d.memory_results.seq_lens[s]?.dense_mb ?? null);
+      const sp    = seqs.map(s => d.memory_results.seq_lens[s]?.sparse_mb ?? null);
+      Plotly.react('memChart',
+        [LINE(seqs, dense, 'Dense', '#4C72B0'),
+         LINE(seqs, sp,    'XSAKE (HADS)', '#e63946')],
+        LAYOUT('', 'MB'));
+    }
+
+    // HADS per-head
+    if (d.hads_results?.patterns?.hads?.per_head) {
+      const ph = d.hads_results.patterns.hads.per_head;
+      const heads = ph.sparsity.map((_, i) => i);
+      Plotly.react('hadsChart', [{
+        x: heads, y: ph.sparsity,
+        type: 'bar',
+        marker: { color: ph.entropy ?? ph.sparsity, colorscale: 'RdYlGn_r' },
+        name: 'sparsity ratio',
+      }], { ...LAYOUT('', 'sparsity ratio'),
+            xaxis: { ...LAYOUT('','').xaxis, title: 'head index' } });
+    }
+  } catch (e) { console.warn('Benchmark fetch failed:', e); }
+}
+
+// Initial render with empty data
+['lossChart','pplChart','gradChart'].forEach(id =>
+  Plotly.newPlot(id, [], LAYOUT('', ''), { responsive: true }));
+['latencyChart','memChart','hadsChart'].forEach(id =>
+  Plotly.newPlot(id, [], LAYOUT('', ''), { responsive: true }));
+
+fetchMetrics();
+fetchBenchmarks();
+setInterval(fetchMetrics, 5000);
+setInterval(fetchBenchmarks, 30000);
+</script>
+</body>
+</html>

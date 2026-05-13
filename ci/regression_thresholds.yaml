@@ -1,0 +1,29 @@
+# Benchmark regression thresholds for XSAKE CI
+#
+# A commit that causes any metric to degrade beyond its threshold
+# is flagged as a regression by regression_reporter.py.
+#
+# latency_regression_pct:  max allowed % increase in XSAKE latency vs baseline
+# memory_regression_pct:   max allowed % increase in peak memory usage
+# sparsity_regression_pct: max allowed % decrease in effective sparsity ratio
+# kl_regression_abs:       max allowed increase in KL divergence from dense attention
+
+latency:
+  max_regression_pct: 5.0      # XSAKE must not be >5% slower than previous run
+  seq_lens: [512, 1024, 2048, 4096]
+
+memory:
+  max_regression_pct: 3.0      # peak memory must not grow more than 3%
+  seq_lens: [1024, 4096]
+
+sparsity:
+  min_active_reduction_pct: 35.0   # HADS must skip at least 35% of blocks at seq=4096
+
+correctness:
+  max_attn_output_l2_error: 1.0e-2   # L2 error vs reference on CPU must be < 0.01
+  max_kl_from_dense: 0.5             # sparse attn KL from dense must be < 0.5
+
+training:
+  smoke_test_steps: 20
+  max_final_loss: 12.0               # loss must drop below 12.0 within 20 steps
+  must_decrease: true                # loss at step 20 must be < loss at step 0

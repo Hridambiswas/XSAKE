@@ -1,0 +1,26 @@
+FROM nvidia/cuda:12.3.1-cudnn9-runtime-ubuntu22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+ENV JAX_PLATFORM_NAME=gpu
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3.10 python3-pip python3.10-dev git curl && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN ln -sf /usr/bin/python3.10 /usr/bin/python && \
+    pip install --upgrade pip
+
+WORKDIR /xsake
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir \
+    "jax[cuda12]>=0.4.25" \
+    && pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+RUN pip install -e ".[gpu,training,observability,dev]"
+
+EXPOSE 8000
+
+CMD ["uvicorn", "observability.dashboard.app:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -1,0 +1,23 @@
+FROM python:3.10-slim
+
+ENV PYTHONUNBUFFERED=1
+ENV JAX_PLATFORM_NAME=tpu
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git curl libopenblas-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /xsake
+
+COPY requirements.txt .
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir \
+    "jax[tpu]>=0.4.25" -f https://storage.googleapis.com/jax-releases/libtpu_releases.html \
+    && pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+RUN pip install -e ".[tpu,training,observability,dev]"
+
+EXPOSE 8000
+
+CMD ["uvicorn", "observability.dashboard.app:app", "--host", "0.0.0.0", "--port", "8000"]
