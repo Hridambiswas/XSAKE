@@ -1,0 +1,12 @@
+# HADS — Head-Adaptive Dynamic Sparsity configuration
+
+min_sparsity: 0.10          # densest allowed head (high-entropy / semantic heads)
+max_sparsity: 0.90          # sparsest allowed head (low-entropy / syntactic heads)
+calibration_steps: 10       # forward passes used to measure head entropy
+block_size: 128             # Pallas block granularity (tokens per block)
+window_size: 2              # local window always kept regardless of sparsity
+entropy_temperature: 1.0    # temperature applied to softmax before entropy computation
+
+# Entropy thresholds (for logging / analysis only — not used in mask construction)
+low_entropy_threshold: 0.8   # heads below this are considered "focused"
+high_entropy_threshold: 2.0  # heads above this are considered "diffuse"

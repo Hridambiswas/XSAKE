@@ -1,0 +1,12 @@
+block_size_q: 128
+block_size_kv: 128
+sparsity_type: hads       # dense | local | random | bigbird | hads
+use_pallas: true
+
+hads:
+  min_sparsity: 0.10
+  max_sparsity: 0.90
+  calibration_steps: 10
+  block_size: 128
+  window_size: 2
+  entropy_temperature: 1.0
