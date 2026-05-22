@@ -259,10 +259,12 @@ export default function Home() {
                     style={{
                       padding: "0.75rem 1rem",
                       textAlign: "left",
-                      fontSize: "0.75rem",
-                      letterSpacing: "0.1em",
+                      fontSize: "0.7rem",
+                      letterSpacing: "0.12em",
                       textTransform: "uppercase",
                       color: "var(--text-muted)",
+                      fontWeight: 700,
+                      background: "var(--surface2)",
                     }}
                   >
                     {h}
