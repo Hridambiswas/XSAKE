@@ -62,7 +62,7 @@ export default function HADSPage() {
 
   return (
     <div style={{ maxWidth: 1000, margin: "0 auto", padding: "3rem 1.5rem" }}>
-      <h1 style={{ fontSize: "1.75rem", fontWeight: 800, marginBottom: "0.5rem" }}>
+      <h1 style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: "2rem", fontWeight: 900, marginBottom: "0.5rem", letterSpacing: "-0.02em" }}>
         HADS Pattern Visualizer
       </h1>
       <p style={{ color: "var(--text-muted)", marginBottom: "2.5rem" }}>
