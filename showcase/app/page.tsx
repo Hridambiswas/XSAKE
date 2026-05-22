@@ -35,10 +35,11 @@ export default function Home() {
         </div>
         <h1
           style={{
-            fontSize: "clamp(2rem, 5vw, 3.5rem)",
-            fontWeight: 800,
-            lineHeight: 1.1,
-            letterSpacing: "-0.02em",
+            fontFamily: "Georgia, 'Times New Roman', serif",
+            fontSize: "clamp(2.25rem, 5.5vw, 4rem)",
+            fontWeight: 900,
+            lineHeight: 1.05,
+            letterSpacing: "-0.03em",
             marginBottom: "1.5rem",
           }}
         >
