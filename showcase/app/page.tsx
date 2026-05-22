@@ -67,11 +67,13 @@ export default function Home() {
             style={{
               background: "var(--crimson)",
               color: "#fff",
-              padding: "0.6rem 1.5rem",
-              borderRadius: 8,
+              padding: "0.65rem 2rem",
+              borderRadius: 2,
               textDecoration: "none",
-              fontWeight: 600,
-              fontSize: "0.9rem",
+              fontWeight: 700,
+              fontSize: "0.8rem",
+              textTransform: "uppercase",
+              letterSpacing: "0.08em",
             }}
           >
             Explore HADS
@@ -79,27 +81,31 @@ export default function Home() {
           <Link
             href="/benchmarks"
             style={{
-              border: "1px solid var(--border)",
+              border: "2px solid var(--border)",
               color: "var(--text)",
-              padding: "0.6rem 1.5rem",
-              borderRadius: 8,
+              padding: "0.65rem 2rem",
+              borderRadius: 2,
               textDecoration: "none",
-              fontWeight: 500,
-              fontSize: "0.9rem",
+              fontWeight: 700,
+              fontSize: "0.8rem",
+              textTransform: "uppercase",
+              letterSpacing: "0.08em",
             }}
           >
-            See Benchmarks
+            Benchmarks
           </Link>
           <Link
             href="/training"
             style={{
-              border: "1px solid var(--border)",
+              border: "2px solid var(--border)",
               color: "var(--text)",
-              padding: "0.6rem 1.5rem",
-              borderRadius: 8,
+              padding: "0.65rem 2rem",
+              borderRadius: 2,
               textDecoration: "none",
-              fontWeight: 500,
-              fontSize: "0.9rem",
+              fontWeight: 700,
+              fontSize: "0.8rem",
+              textTransform: "uppercase",
+              letterSpacing: "0.08em",
             }}
           >
             Training Replay
