@@ -76,7 +76,8 @@ export default function HADSPage() {
         style={{
           background: "var(--surface)",
           border: "1px solid var(--border)",
-          borderRadius: 10,
+          borderTop: "3px solid var(--crimson)",
+          borderRadius: 4,
           padding: "1.5rem",
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
