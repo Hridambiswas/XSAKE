@@ -210,7 +210,8 @@ export default function TrainingPage() {
             style={{
               background: "var(--surface)",
               border: "1px solid var(--border)",
-              borderRadius: 8,
+              borderLeft: "3px solid var(--crimson)",
+              borderRadius: 4,
               padding: "0.875rem 1rem",
             }}
           >
