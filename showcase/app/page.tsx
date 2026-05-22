@@ -239,7 +239,7 @@ export default function Home() {
 
       {/* Comparison Table */}
       <section style={{ marginBottom: "4rem" }}>
-        <h2 style={{ fontSize: "1.25rem", fontWeight: 700, marginBottom: "1rem" }}>
+        <h2 style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: "1.5rem", fontWeight: 700, marginBottom: "1rem", paddingBottom: "0.5rem", borderBottom: "1px solid var(--border)" }}>
           HADS vs Baselines (seq=2048)
         </h2>
         <div
@@ -317,7 +317,7 @@ export default function Home() {
 
       {/* Architecture */}
       <section>
-        <h2 style={{ fontSize: "1.25rem", fontWeight: 700, marginBottom: "1rem" }}>Architecture</h2>
+        <h2 style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: "1.5rem", fontWeight: 700, marginBottom: "1rem", paddingBottom: "0.5rem", borderBottom: "1px solid var(--border)" }}>Architecture</h2>
         <div
           style={{
             background: "var(--surface)",
