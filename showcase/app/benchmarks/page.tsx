@@ -115,7 +115,8 @@ export default function BenchmarksPage() {
         style={{
           background: "var(--surface)",
           border: "1px solid var(--border)",
-          borderRadius: 10,
+          borderTop: "3px solid var(--crimson)",
+          borderRadius: 4,
           padding: "1.5rem",
           marginBottom: "2rem",
         }}
