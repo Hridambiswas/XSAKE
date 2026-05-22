@@ -134,14 +134,15 @@ export default function Home() {
               style={{
                 background: "var(--surface)",
                 border: "1px solid var(--border)",
-                borderRadius: 10,
+                borderLeft: "3px solid var(--crimson)",
+                borderRadius: 4,
                 padding: "1.25rem",
               }}
             >
               <div
                 style={{
-                  fontSize: "2rem",
-                  fontWeight: 800,
+                  fontSize: "2.25rem",
+                  fontWeight: 900,
                   color: "var(--crimson)",
                   fontFamily: "var(--font-mono)",
                   marginBottom: "0.25rem",
