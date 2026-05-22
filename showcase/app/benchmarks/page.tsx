@@ -248,7 +248,7 @@ export default function BenchmarksPage() {
               <thead>
                 <tr style={{ borderBottom: "1px solid var(--border)" }}>
                   {["seq_len", "Dense (ms)", "HADS (ms)", "Reduction", "BigBird (ms)", "Sliding (ms)"].map((h) => (
-                    <th key={h} style={{ padding: "0.6rem 1rem", textAlign: "left", color: "var(--text-muted)" }}>{h}</th>
+                    <th key={h} style={{ padding: "0.6rem 1rem", textAlign: "left", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", fontSize: "0.7rem", fontWeight: 700, background: "var(--surface2)" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -274,7 +274,7 @@ export default function BenchmarksPage() {
               <thead>
                 <tr style={{ borderBottom: "1px solid var(--border)" }}>
                   {["seq_len", "Dense (MB)", "HADS (MB)", "Savings", "BigBird (MB)"].map((h) => (
-                    <th key={h} style={{ padding: "0.6rem 1rem", textAlign: "left", color: "var(--text-muted)" }}>{h}</th>
+                    <th key={h} style={{ padding: "0.6rem 1rem", textAlign: "left", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", fontSize: "0.7rem", fontWeight: 700, background: "var(--surface2)" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -299,7 +299,7 @@ export default function BenchmarksPage() {
               <thead>
                 <tr style={{ borderBottom: "1px solid var(--border)" }}>
                   {["Devices", "Throughput (tok/s)", "Scaling efficiency"].map((h) => (
-                    <th key={h} style={{ padding: "0.6rem 1rem", textAlign: "left", color: "var(--text-muted)" }}>{h}</th>
+                    <th key={h} style={{ padding: "0.6rem 1rem", textAlign: "left", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", fontSize: "0.7rem", fontWeight: 700, background: "var(--surface2)" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -322,7 +322,7 @@ export default function BenchmarksPage() {
               <thead>
                 <tr style={{ borderBottom: "1px solid var(--border)" }}>
                   {["Method", "KL Divergence", "vs HADS"].map((h) => (
-                    <th key={h} style={{ padding: "0.6rem 1rem", textAlign: "left", color: "var(--text-muted)" }}>{h}</th>
+                    <th key={h} style={{ padding: "0.6rem 1rem", textAlign: "left", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", fontSize: "0.7rem", fontWeight: 700, background: "var(--surface2)" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
