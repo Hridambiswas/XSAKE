@@ -134,11 +134,11 @@ export default function HADSPage() {
           style={{
             background: "var(--surface)",
             border: "1px solid var(--border)",
-            borderRadius: 10,
+            borderRadius: 4,
             padding: "1.25rem",
           }}
         >
-          <h3 style={{ fontSize: "0.875rem", fontWeight: 600, marginBottom: "1rem" }}>
+          <h3 style={{ fontSize: "0.7rem", fontWeight: 700, marginBottom: "1rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--text-muted)" }}>
             Per-Head Entropy & Sparsity
           </h3>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
