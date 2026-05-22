@@ -23,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             position: "sticky",
             top: 0,
             zIndex: 50,
+            boxShadow: "0 4px 24px rgba(0,0,0,0.5)",
           }}
         >
           <div
@@ -30,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               maxWidth: 1100,
               margin: "0 auto",
               padding: "0 1.5rem",
-              height: 56,
+              height: 72,
               display: "flex",
               alignItems: "center",
               gap: "2rem",
