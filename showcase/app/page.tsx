@@ -287,6 +287,7 @@ export default function Home() {
                       fontWeight: r.highlight ? 700 : 400,
                       color: r.highlight ? "var(--crimson)" : "var(--text)",
                       fontFamily: r.highlight ? "var(--font-mono)" : "inherit",
+                      borderLeft: r.highlight ? "3px solid var(--crimson)" : "3px solid transparent",
                     }}
                   >
                     {r.method}
