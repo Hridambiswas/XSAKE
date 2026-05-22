@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CopyCitation from "./components/CopyCitation";
 
 const RESULTS = [
   { label: "Latency reduction (seq=4096)", value: "42.2%", sub: "713ms → 412ms on T4" },
@@ -317,6 +318,9 @@ export default function Home() {
           HADS achieves the lowest KL divergence (best quality) among all sparse methods.
         </p>
       </section>
+
+      {/* Citation */}
+      <CopyCitation />
 
       {/* Architecture */}
       <section>
