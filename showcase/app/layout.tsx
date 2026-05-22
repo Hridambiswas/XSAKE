@@ -79,12 +79,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                fontSize: "0.8rem",
+                fontSize: "0.7rem",
                 color: "var(--text-muted)",
                 textDecoration: "none",
                 border: "1px solid var(--border)",
-                padding: "0.3rem 0.75rem",
-                borderRadius: 6,
+                padding: "0.35rem 0.9rem",
+                borderRadius: 2,
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                fontWeight: 600,
               }}
             >
               GitHub
