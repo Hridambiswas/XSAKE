@@ -98,13 +98,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer
           style={{
             borderTop: "1px solid var(--border)",
-            padding: "1.5rem",
+            padding: "2rem 1.5rem",
             textAlign: "center",
-            fontSize: "0.8rem",
-            color: "var(--text-muted)",
           }}
         >
-          XSAKE · JAX + Pallas · Head-Adaptive Dynamic Sparsity · MIT License
+          <div style={{ fontSize: "0.8rem", color: "var(--text-muted)", marginBottom: "0.35rem" }}>
+            XSAKE · JAX + Pallas · Head-Adaptive Dynamic Sparsity · MIT License
+          </div>
+          <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", opacity: 0.6 }}>
+            Hridam Biswas · KIIT University
+          </div>
         </footer>
       </body>
     </html>
