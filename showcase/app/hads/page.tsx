@@ -149,7 +149,8 @@ export default function HADSPage() {
                 style={{
                   background: i === selectedHead ? "rgba(220,20,60,0.12)" : "transparent",
                   border: i === selectedHead ? "1px solid var(--crimson)" : "1px solid transparent",
-                  borderRadius: 6,
+                  borderLeft: i === selectedHead ? "3px solid var(--crimson)" : "3px solid transparent",
+                  borderRadius: 2,
                   padding: "0.5rem 0.75rem",
                   cursor: "pointer",
                   textAlign: "left",
