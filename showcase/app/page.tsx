@@ -165,9 +165,12 @@ export default function Home() {
       <section style={{ marginBottom: "4rem" }}>
         <h2
           style={{
-            fontSize: "1.25rem",
+            fontFamily: "Georgia, 'Times New Roman', serif",
+            fontSize: "1.5rem",
             fontWeight: 700,
             marginBottom: "1rem",
+            paddingBottom: "0.5rem",
+            borderBottom: "1px solid var(--border)",
           }}
         >
           What is HADS?
