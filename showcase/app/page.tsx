@@ -117,12 +117,14 @@ export default function Home() {
       <section style={{ marginBottom: "4rem" }}>
         <h2
           style={{
-            fontSize: "0.75rem",
-            letterSpacing: "0.15em",
+            fontSize: "0.7rem",
+            letterSpacing: "0.18em",
             textTransform: "uppercase",
             color: "var(--text-muted)",
             marginBottom: "1.5rem",
             fontFamily: "var(--font-mono)",
+            paddingBottom: "0.75rem",
+            borderBottom: "1px solid var(--border)",
           }}
         >
           Key Results · NVIDIA T4 (Kaggle)
