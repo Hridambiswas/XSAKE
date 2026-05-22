@@ -41,11 +41,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               href="/"
               style={{
                 fontFamily: "var(--font-mono)",
-                fontWeight: 700,
-                fontSize: "1rem",
+                fontWeight: 800,
+                fontSize: "1.125rem",
                 color: "var(--crimson)",
                 textDecoration: "none",
-                letterSpacing: "0.04em",
+                letterSpacing: "0.1em",
+                borderLeft: "3px solid var(--crimson)",
+                paddingLeft: "0.75rem",
               }}
             >
               XSAKE
