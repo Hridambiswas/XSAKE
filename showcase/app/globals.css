@@ -22,6 +22,17 @@ body {
   box-sizing: border-box;
 }
 
+::selection {
+  background: var(--crimson);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--crimson);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
