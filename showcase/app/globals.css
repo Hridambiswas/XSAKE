@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0d0d0d;
-  --surface: #161616;
-  --surface2: #1e1e1e;
-  --border: #2a2a2a;
+  --bg: #0f0e0d;
+  --surface: #181714;
+  --surface2: #201e1b;
+  --border: #2e2b27;
   --crimson: #dc143c;
   --crimson-dim: #8b0d24;
   --text: #e8e8e8;
@@ -27,4 +27,4 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: var(--crimson-dim); border-radius: 3px; }
