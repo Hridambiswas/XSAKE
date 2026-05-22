@@ -61,7 +61,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <Link
                   key={n.href}
                   href={n.href}
-                  style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: "0.875rem" }}
+                  style={{
+                    color: "var(--text-muted)",
+                    textDecoration: "none",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.09em",
+                  }}
                 >
                   {n.label}
                 </Link>
