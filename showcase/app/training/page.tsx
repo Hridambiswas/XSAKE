@@ -136,12 +136,14 @@ export default function TrainingPage() {
             background: "var(--crimson)",
             color: "#fff",
             border: "none",
-            borderRadius: 8,
-            padding: "0.5rem 1.25rem",
+            borderRadius: 2,
+            padding: "0.55rem 1.5rem",
             cursor: "pointer",
-            fontWeight: 600,
-            fontSize: "0.875rem",
-            minWidth: 80,
+            fontWeight: 700,
+            fontSize: "0.75rem",
+            textTransform: "uppercase",
+            letterSpacing: "0.08em",
+            minWidth: 90,
           }}
         >
           {playing ? "Pause" : currentFrame >= RAW_STEPS.length - 1 ? "Restart" : "Play"}
