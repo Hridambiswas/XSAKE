@@ -78,11 +78,11 @@ export default function BenchmarksPage() {
       <div
         style={{
           display: "flex",
-          gap: "0.5rem",
+          gap: "0.4rem",
           marginBottom: "2rem",
           background: "var(--surface)",
-          borderRadius: 10,
-          padding: "0.4rem",
+          borderRadius: 4,
+          padding: "0.35rem",
           border: "1px solid var(--border)",
           width: "fit-content",
         }}
@@ -93,13 +93,15 @@ export default function BenchmarksPage() {
             onClick={() => setTab(t)}
             style={{
               padding: "0.4rem 1rem",
-              borderRadius: 7,
+              borderRadius: 2,
               border: "none",
               background: tab === t ? "var(--crimson)" : "transparent",
               color: tab === t ? "#fff" : "var(--text-muted)",
               cursor: "pointer",
-              fontSize: "0.875rem",
-              fontWeight: tab === t ? 600 : 400,
+              fontSize: "0.75rem",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.06em",
               transition: "all 0.15s",
             }}
           >
